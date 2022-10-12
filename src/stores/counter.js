@@ -66,6 +66,12 @@ export const useShoppingStore = defineStore('shopping', {
           this.cartItem = this.cartItem.filter(product => product.id !== item.id)
         }
       }
+    },
+
+  },
+  getters:{
+    getCartItem(){
+      return this.cartItem
     }
   }
  
