@@ -19,9 +19,9 @@ export const useShoppingStore = defineStore('shopping', {
         },
         {
           id:3,
-          name:'Suzuki GSX 1400cc',
+          name:'Harley Davidson VN',
           price: 3000,
-          image:'https://topxephang.com/wp-content/uploads/2017/12/163018@suzuki-gsx1400-final.jpg'
+          image:'https://www.harley-davidson.com/content/dam/h-d/images/product-images/bikes/motorcycle/2022/2022-softail-standard/2022-softail-standard-010/2022-softail-standard-010-motorcycle.jpg?impolicy=myresize&rw=500'
         },
         {
           id:4,
@@ -36,8 +36,10 @@ export const useShoppingStore = defineStore('shopping', {
           image:'https://topxephang.com/wp-content/uploads/2017/12/3a8bd599b0a6a87002de9b72c98bd3ca-sportster-cafe-racer-hd-sportster.jpg'
         }
       ],
-      cartItem:[]
+      cartItem:[],
+      searchText: ''
     }
+
   },
   actions:{
     addToCart(item){
@@ -49,6 +51,7 @@ export const useShoppingStore = defineStore('shopping', {
       else{
         item.quantity = 1
         this.cartItem.push(item)
+        
       }
       console.log(this.cartItem)
     },
@@ -67,11 +70,23 @@ export const useShoppingStore = defineStore('shopping', {
         }
       }
     },
+    deleteItem(item){
+      this.cartItem = this.cartItem.filter(product => product.id !== item.id)
+    } 
 
   },
   getters:{
     getCartItem(){
       return this.cartItem
+    },
+    getCountCart(){
+      return this.cartItem.length
+    },
+    searchCart(){
+        return this.products.map(product => {
+          product.toLowerCase()
+          return product
+        }).filter((product) => product.include(this.searchText))
     }
   }
  

@@ -9,9 +9,9 @@
                 <li>Price</li>
                 <li>Subtotal</li>
             </ul>
-            <ul class="cart-item"  v-for="item in data.getCartItem" :key="item.id">
-                <li>{{item.id}}</li>
-                <img :src="item.image" :alt="item.name" height="60" width="60">
+            <ul class="cart-item"  v-for="(item,index) in data.getCartItem" :key="item.id">
+                <li>{{index+1}}</li>
+                <img :src="item.image" :alt="item.name" height="70" width="80">
                 <li>{{item.name}}</li>
                 <li class="cart-quantity">
                     <i @click="data.increaseQuantity(item)" class="fa-solid fa-chevron-up"></i>
@@ -20,10 +20,11 @@
                 </li>
                 <li>{{item.price}}</li>
                 <li>{{item.price * item.quantity}}</li>
+                <li ><button @click="data.deleteItem(item)" class="btn-delete">delete</button></li>
             </ul>
             <ul class="total">
                 <li>Total</li>
-                <li>total</li>
+                <li>{{data.cartItem.reduce((total,item) => total += item.quantity * item.price, 0 )}}</li>
             </ul>
         </div>
     </div>
@@ -53,31 +54,50 @@ const data=useShoppingStore()
 .cart-body ul li{
     display: inline-block;
     font-size: 16px;
+    text-align: center;
 }
+
 ul.cart-item li i{
     cursor: pointer;
 }
 ul.cart-item li:nth-child(1){
-    padding: 0 60px;
+    padding-left: 70px;
+    min-width: 90px;
 }
 ul.cart-item img{
-    padding: 0 60px;
+    padding: 0 55px;
 }
 
 ul.cart-item li:nth-child(3){
-    padding: 0 45px;
+    padding: 0 20px;
+    min-width: 156px;
 }
 ul.cart-item li:nth-child(4){
-    padding: 0 50px;
+    padding: 0 30px;
 }
 ul.cart-item li:nth-child(5){
     padding: 0 90px;
+    min-width: 50px;
+}
+ul.cart-item li:nth-child(6){
+    padding: 0 38px;
+    min-width: 50px;
 }
 ul.total{
     text-align: center;
 }
-ul.total li{
-    font-weight: 500;
+.total li{
+    font-weight: 600;
+    padding: 0 100px;
+
+}
+.btn-delete{
+    background-color: rgb(219, 23, 23);
+    color: rgb(237, 229, 229);
+    cursor: pointer;
+    border-radius: 4px;
+    border: none;
+    margin-left: 20px;
 }
 
 </style>
