@@ -25,6 +25,7 @@
             <ul class="total">
                 <li>Total</li>
                 <li>{{data.cartItem.reduce((total,item) => total += item.quantity * item.price, 0 )}}</li>
+                <li><button @click="data.buyItem()">Mua hang</button></li>
             </ul>
         </div>
     </div>

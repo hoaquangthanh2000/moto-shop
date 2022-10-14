@@ -37,12 +37,15 @@ export const useShoppingStore = defineStore('shopping', {
         }
       ],
       cartItem:[],
-      searchText: ''
+      searchText:"",
+      notiAddtoCart: false,
+      status:""
     }
 
   },
   actions:{
     addToCart(item){
+      console.log(this.searchText)
       let index = this.cartItem.findIndex(product => product.id === item.id)
       if(index!== -1){
         this.products[index].quantity += 1
@@ -51,13 +54,14 @@ export const useShoppingStore = defineStore('shopping', {
       else{
         item.quantity = 1
         this.cartItem.push(item)
-        
+        this.notiAddtoCart = true
+        setTimeout(() => this.notiAddtoCart = false, 1000)
       }
-      console.log(this.cartItem)
+      
     },
     increaseQuantity(item){
       let index = this.cartItem.findIndex(product => product.id === item.id)
-      if(index !== -1){
+      if(index !== -1){[]
         this.cartItem[index].quantity += 1
       }
     },
@@ -72,24 +76,36 @@ export const useShoppingStore = defineStore('shopping', {
     },
     deleteItem(item){
       this.cartItem = this.cartItem.filter(product => product.id !== item.id)
-    } 
-
+    },
+    buyItem(){
+      const checkData = Math.random()
+      if(checkData > 0.5){
+        this.status = 'done'
+        this.notiAddtoCart = true
+        setTimeout(() => this.notiAddtoCart = false, 1000)
+      }else{
+        this.status = 'fail'
+        this.notiAddtoCart = true
+        setTimeout(() => this.notiAddtoCart = false, 1000)
+      }
+      console.log(this.status)
+    }
+    
+    
   },
-  getters:{
+  getters: {
     getCartItem(){
       return this.cartItem
     },
     getCountCart(){
       return this.cartItem.length
     },
-    searchCart(){
-        return this.products.map(product => {
-          product.toLowerCase()
-          return product
-        }).filter((product) => product.include(this.searchText))
+    getSearchedProducts(){
+      return this.products
+      .filter((product) => product.name.toLowerCase().includes(this.searchText))
     }
-  }
- 
+    
+}
   
 
   

@@ -16,6 +16,7 @@ import ProductList from './components/ProductList.vue'
 <style>
 .wrapper{
   width: 100%;
+  position: relative;
 }
 </style>
 
